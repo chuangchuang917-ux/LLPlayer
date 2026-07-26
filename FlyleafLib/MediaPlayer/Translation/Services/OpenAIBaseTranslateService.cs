@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Encodings.Web;
@@ -225,7 +225,7 @@ public class OpenAIBaseTranslateService : ITranslateService
         // getting models
         try
         {
-            using var result = await client.GetAsync("/v1/models");
+            using var result = await client.GetAsync(settings.ModelsPath);
 
             jsonResultString = await result.Content.ReadAsStringAsync();
 

@@ -244,6 +244,9 @@ public abstract class OpenAIBaseTranslateSettings : NotifyPropertyChanged, ITran
         set => throw new NotImplementedException();
     }
 
+    [JsonIgnore]
+    public virtual string ModelsPath => "/v1/models";
+
     public string Model { get; set => Set(ref field, value); }
 
     [JsonIgnore]
@@ -628,8 +631,13 @@ public class GeminiTranslateSettings : OpenAIBaseTranslateSettings
     [JsonIgnore]
     public override TranslateServiceType ServiceType => TranslateServiceType.Gemini;
     [JsonIgnore]
-    public override string DefaultEndpoint => "https://generativelanguage.googleapis.com/v1beta/openai";
+    public override string DefaultEndpoint => "https://generativelanguage.googleapis.com/v1beta/openai/";
     public string ApiKey { get; set => Set(ref field, value); }
+
+    [JsonIgnore]
+    public override string ChatPath => "chat/completions";
+    [JsonIgnore]
+    public override string ModelsPath => "models";
 
     [JsonIgnore]
     public override bool ReasonStripRequired => false;
