@@ -95,14 +95,14 @@ public class PlaybackControlsService : Bindable
 
         // Check subtitles for Shadowing and SmartSpeed
         var subManager = _fl.Player.SubtitlesManager[0];
-        if (subManager?.Subtitles == null || subManager.Subtitles.Count == 0) return;
+        if (subManager?.Subs == null || subManager.Subs.Count == 0) return;
 
-        var curSub = subManager.Subtitles.FirstOrDefault(s => curTime >= s.StartTime.Ticks && curTime <= s.EndTime.Ticks);
+        var curSub = subManager.Subs.FirstOrDefault(s => curTime >= s.StartTime.Ticks && curTime <= s.EndTime.Ticks);
 
         // 2. Shadowing Auto-Pause
         if (IsShadowingModeEnabled && _fl.Player.Status == Status.Playing)
         {
-            var prevSub = subManager.Subtitles.LastOrDefault(s => s.EndTime.Ticks <= curTime);
+            var prevSub = subManager.Subs.LastOrDefault(s => s.EndTime.Ticks <= curTime);
             if (prevSub != null)
             {
                 long endTime = prevSub.EndTime.Ticks;

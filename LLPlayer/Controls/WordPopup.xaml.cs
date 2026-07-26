@@ -445,7 +445,7 @@ public partial class WordPopup : UserControl, INotifyPropertyChanged
         string word = _clickedWords;
         string def = TranslationText.Text;
         string sentence = _clickedText;
-        string title = FL.Player.Title ?? "LLPlayer";
+        string title = FL.Player.Playlist.Selected?.Title ?? "LLPlayer";
 
         _vocabService.Add(word, def, sentence, title, FL.Player.CurTime);
         MessageBox.Show($"已將 [{word}] 加入生字簿！", "加入生字簿", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -458,7 +458,7 @@ public partial class WordPopup : UserControl, INotifyPropertyChanged
         string word = _clickedWords;
         string def = TranslationText.Text;
         string sentence = _clickedText;
-        string title = FL.Player.Title ?? "LLPlayer";
+        string title = FL.Player.Playlist.Selected?.Title ?? "LLPlayer";
 
         var (success, msg) = await _ankiService.AddNoteAsync(word, def, sentence, title);
         if (success)
