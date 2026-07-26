@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using LLPlayer.Services;
-using Prism.Services.Dialogs;
 
 namespace LLPlayer.Views;
 
@@ -13,7 +12,7 @@ public partial class VocabularyDialog : UserControl, IDialogAware
     private readonly VocabularyService _vocabService;
     private readonly AnkiConnectService _ankiService;
 
-    public event Action<IDialogResult>? RequestClose;
+    public DialogCloseListener RequestClose { get; }
 
     public string Title => "生字簿與 Anki 管理";
 
@@ -106,7 +105,7 @@ public partial class VocabularyDialog : UserControl, IDialogAware
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+        RequestClose.Invoke(ButtonResult.OK);
     }
 
     public bool CanCloseDialog() => true;
