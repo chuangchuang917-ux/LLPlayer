@@ -628,16 +628,48 @@ public class LiteLLMTranslateSettings : OpenAIBaseTranslateSettings
 
 public class GeminiTranslateSettings : OpenAIBaseTranslateSettings
 {
+    public GeminiTranslateSettings()
+    {
+        Model = "gemini-3.5-flash-lite";
+    }
+
     [JsonIgnore]
     public override TranslateServiceType ServiceType => TranslateServiceType.Gemini;
     [JsonIgnore]
-    public override string DefaultEndpoint => "https://generativelanguage.googleapis.com/v1beta/openai/";
+    public override string DefaultEndpoint => "https://generativelanguage.googleapis.com/v1beta";
     public string ApiKey { get; set => Set(ref field, value); }
 
     [JsonIgnore]
-    public override string ChatPath => "chat/completions";
+    public override bool ReasonStripRequired => false;
+
+    internal override HttpClient GetHttpClient(bool healthCheck = false)
+    {
+        if (string.IsNullOrWhiteSpace(ApiKey))
+        {
+            throw new TranslationConfigException(
+                $"API Key for {ServiceType} is not configured.");
+        }
+
+        HttpClient client = base.GetHttpClient(healthCheck);
+        client.DefaultRequestHeaders.Remove("x-goog-api-key");
+        client.DefaultRequestHeaders.Add("x-goog-api-key", ApiKey);
+
+        return client;
+    }
+}
+
+public class OpenRouterTranslateSettings : OpenAIBaseTranslateSettings
+{
+    public OpenRouterTranslateSettings()
+    {
+        Model = "google/gemini-3.5-flash-lite";
+    }
+
     [JsonIgnore]
-    public override string ModelsPath => "models";
+    public override TranslateServiceType ServiceType => TranslateServiceType.OpenRouter;
+    [JsonIgnore]
+    public override string DefaultEndpoint => "https://openrouter.ai/api/v1";
+    public string ApiKey { get; set => Set(ref field, value); }
 
     [JsonIgnore]
     public override bool ReasonStripRequired => false;
@@ -652,6 +684,8 @@ public class GeminiTranslateSettings : OpenAIBaseTranslateSettings
 
         HttpClient client = base.GetHttpClient(healthCheck);
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKey}");
+        client.DefaultRequestHeaders.Add("X-Title", "LLPlayer");
+        client.DefaultRequestHeaders.Add("HTTP-Referer", "https://llplayer.com");
 
         return client;
     }
@@ -659,11 +693,12 @@ public class GeminiTranslateSettings : OpenAIBaseTranslateSettings
 
 public class DeepSeekTranslateSettings : OpenAIBaseTranslateSettings
 {
+    public string ApiKey { get; set => Set(ref field, value); }
+
     [JsonIgnore]
     public override TranslateServiceType ServiceType => TranslateServiceType.DeepSeek;
     [JsonIgnore]
     public override string DefaultEndpoint => "https://api.deepseek.com";
-    public string ApiKey { get; set => Set(ref field, value); }
 
     [JsonIgnore]
     public override bool ReasonStripRequired => false;

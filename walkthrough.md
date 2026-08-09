@@ -21,7 +21,8 @@
 
 3. **即時翻譯與 LLM 引擎擴充 (Real-time & AI Translation)**
    - 支援來源：Google Translation, DeepL, OpenAI, Claude, Ollama, LM Studio 等。
-   - **新增**：**Google Gemini** API（OpenAI 相容 Endpoint `https://generativelanguage.googleapis.com/v1beta/openai`）。
+   - **重構**：**Google Gemini** 原生 REST API 服務 (`GeminiTranslateService`)，直連 `v1beta/models/{model}:generateContent`，支援 `x-goog-api-key` Header 驗證，預設模型 `gemini-3.5-flash-lite`。
+   - **新增**：**OpenRouter** 多模型 LLM API 服務 (`OpenRouterTranslateSettings`)，預設 Endpoint `https://openrouter.ai/api/v1`，預設模型 `google/gemini-3.5-flash-lite`，並支援 `X-Title` 與 `HTTP-Referer` 標頭。
    - **新增**：**DeepSeek** API（OpenAI 相容 Endpoint `https://api.deepseek.com`）。
 
 4. **生字簿與 Anki 卡片整合 (Vocabulary Book & Anki Sync)**
@@ -40,22 +41,25 @@
 
 ## 📂 專案架構目錄與修改紀錄
 
-- `CONTEXT.md`：紀錄生字簿、AnkiConnect、AB Loop、Shadowing 等領域模型名詞與界限。
+- `CONTEXT.md`：紀錄生字簿、AnkiConnect、AB Loop、Shadowing、Gemini Native API、OpenRouter API 等領域模型名詞與界限。
 - `docs/adr/`：
   - `0001-ai-translation-engine-extension.md`：Gemini / DeepSeek API 串接架構決策。
   - `0002-anki-connect-and-vocab-store.md`：生字庫與 AnkiConnect 即時同步決策。
+  - `0003-gemini-native-and-openrouter-llm.md`：Gemini 原生 API 重構與 OpenRouter LLM 整合決策。
 - `LLPlayer/Services/`：
   - `VocabularyItem.cs` & `VocabularyService.cs`：生字模型與 JSON/CSV 持久化儲存。
   - `AnkiConnectService.cs`：AnkiConnect HTTP API 串接服務。
   - `PlaybackControlsService.cs`：AB 循環、影子跟讀與無對白加速控制邏輯。
-  - `AppActions.cs` & `AppConfig.cs`：新增 `CmdOpenWindowVocabulary` 與多型設定型態註冊。
+  - `AppActions.cs` & `AppConfig.cs`：新增 `CmdOpenWindowVocabulary` 與 `OpenRouterTranslateSettings` 設定型態註冊。
 - `LLPlayer/Views/`：
   - `VocabularyDialog.xaml` & `.cs`：生字管理與 Anki 同步視窗。
 - `LLPlayer/Controls/`：
   - `WordPopup.xaml` & `.cs`：新增「📚 加人生字簿」與「🎴 傳送至 Anki」按鈕。
   - `FlyleafBar.xaml`：底部控制列新增生字簿開啟按鈕。
+  - `Settings/SettingsSubtitlesTrans.xaml`：新增 OpenRouter 設定介面 DataTemplate。
 - `FlyleafLib/MediaPlayer/Translation/`：
-  - `ITranslateService.cs`, `ITranslateSettings.cs`, `TranslateServiceFactory.cs`：新增 `Gemini` 與 `DeepSeek` 翻譯設定與工廠邏輯。
+  - `ITranslateService.cs`, `ITranslateSettings.cs`, `TranslateServiceFactory.cs`：重構 `Gemini` 原生 REST 服務，新增 `OpenRouter` 翻譯設定與工廠邏輯。
+  - `GeminiTranslateService.cs`：Google Gemini v1beta 原生 `generateContent` 端點獨立實作。
 
 ---
 

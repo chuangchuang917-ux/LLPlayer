@@ -196,7 +196,8 @@ public class AppConfig : Bindable
             { nameof(ClaudeTranslateSettings), typeof(ClaudeTranslateSettings) },
             { nameof(LiteLLMTranslateSettings), typeof(LiteLLMTranslateSettings) },
             { nameof(GeminiTranslateSettings), typeof(GeminiTranslateSettings) },
-            { nameof(DeepSeekTranslateSettings), typeof(DeepSeekTranslateSettings) }
+            { nameof(DeepSeekTranslateSettings), typeof(DeepSeekTranslateSettings) },
+            { nameof(OpenRouterTranslateSettings), typeof(OpenRouterTranslateSettings) }
         };
 
         JsonSerializerOptions jsonOptions = new()

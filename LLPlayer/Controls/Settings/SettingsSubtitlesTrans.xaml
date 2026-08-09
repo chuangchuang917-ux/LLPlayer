@@ -366,6 +366,22 @@
             </StackPanel>
         </DataTemplate>
 
+        <!-- OpenRouter -->
+        <DataTemplate DataType="{x:Type flyleafServices:OpenRouterTranslateSettings}">
+            <StackPanel>
+                <DockPanel Margin="0 0 0 8">
+                    <TextBlock
+                        Width="180"
+                        Text="API Key" />
+                    <TextBox
+                        HorizontalContentAlignment="Left"
+                        Text="{Binding ApiKey}" />
+                </DockPanel>
+
+                <transControl:OpenAIBaseTranslateControl />
+            </StackPanel>
+        </DataTemplate>
+
         <!-- OpenAILike -->
         <DataTemplate DataType="{x:Type flyleafServices:OpenAILikeTranslateSettings}">
             <StackPanel>

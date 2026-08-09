@@ -23,3 +23,13 @@ _Avoid_: Auto pause mode, Sentence pause
 **Smart Speed**:
 An automatic playback speed adjustment feature that accelerates non-subtitle or silent video sections (e.g., to 1.5x~2.0x) and reverts to normal speed (1.0x) during subtitle dialogue.
 _Avoid_: Auto fast forward, Dynamic speed
+
+**Gemini Native API**:
+A dedicated translation integration utilizing Google Gemini's REST API (`generateContent` endpoint with `x-goog-api-key` header authentication and `contents/parts` JSON structure) with `gemini-3.5-flash-lite` as the default model rather than an OpenAI compatibility layer.
+_Avoid_: Gemini OpenAI endpoint, Gemini proxy
+
+**OpenRouter API**:
+An OpenAI-compatible multi-model LLM aggregator service integration (`https://openrouter.ai/api/v1`) with `google/gemini-3.5-flash-lite` as the default model, supporting standard Bearer authentication and custom app metadata headers (`X-Title` and `HTTP-Referer`).
+_Avoid_: OpenRouter proxy, Custom LLM router
+
+

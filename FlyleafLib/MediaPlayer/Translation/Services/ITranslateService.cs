@@ -113,6 +113,12 @@ public enum TranslateServiceType
     /// </summary>
     [Description(nameof(DeepSeek))]
     DeepSeek = 1 << 13,
+
+    /// <summary>
+    /// OpenRouter
+    /// </summary>
+    [Description(nameof(OpenRouter))]
+    OpenRouter = 1 << 14,
 }
 
 public static class TranslateServiceTypeExtensions
@@ -126,7 +132,8 @@ public static class TranslateServiceTypeExtensions
         TranslateServiceType.Claude |
         TranslateServiceType.LiteLLM |
         TranslateServiceType.Gemini |
-        TranslateServiceType.DeepSeek;
+        TranslateServiceType.DeepSeek |
+        TranslateServiceType.OpenRouter;
 
     public static bool IsLLM(this TranslateServiceType serviceType)
     {
@@ -165,6 +172,8 @@ public static class TranslateServiceTypeExtensions
                 return new GeminiTranslateSettings();
             case TranslateServiceType.DeepSeek:
                 return new DeepSeekTranslateSettings();
+            case TranslateServiceType.OpenRouter:
+                return new OpenRouterTranslateSettings();
         }
 
         throw new InvalidOperationException();

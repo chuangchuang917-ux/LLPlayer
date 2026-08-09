@@ -58,10 +58,13 @@ public class TranslateServiceFactory
                 return new OpenAIBaseTranslateService((LiteLLMTranslateSettings)_config.TranslateServiceSettings.GetValueOrDefault(serviceType, new LiteLLMTranslateSettings()), _config.TranslateChatConfig, wordMode);
 
             case TranslateServiceType.Gemini:
-                return new OpenAIBaseTranslateService((GeminiTranslateSettings)_config.TranslateServiceSettings.GetValueOrDefault(serviceType, new GeminiTranslateSettings()), _config.TranslateChatConfig, wordMode);
+                return new GeminiTranslateService((GeminiTranslateSettings)_config.TranslateServiceSettings.GetValueOrDefault(serviceType, new GeminiTranslateSettings()), _config.TranslateChatConfig, wordMode);
 
             case TranslateServiceType.DeepSeek:
                 return new OpenAIBaseTranslateService((DeepSeekTranslateSettings)_config.TranslateServiceSettings.GetValueOrDefault(serviceType, new DeepSeekTranslateSettings()), _config.TranslateChatConfig, wordMode);
+
+            case TranslateServiceType.OpenRouter:
+                return new OpenAIBaseTranslateService((OpenRouterTranslateSettings)_config.TranslateServiceSettings.GetValueOrDefault(serviceType, new OpenRouterTranslateSettings()), _config.TranslateChatConfig, wordMode);
         }
 
         throw new InvalidOperationException($"Translate service {serviceType} does not exist.");
