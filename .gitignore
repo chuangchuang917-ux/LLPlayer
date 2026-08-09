@@ -8,6 +8,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+output_build/
+LLPlayer-win-x64.tar.gz
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
