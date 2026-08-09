@@ -60,17 +60,12 @@
 - `FlyleafLib/MediaPlayer/Translation/`：
   - `ITranslateService.cs`, `ITranslateSettings.cs`, `TranslateServiceFactory.cs`：重構 `Gemini` 原生 REST 服務，新增 `OpenRouter` 翻譯設定與工廠邏輯。
   - `GeminiTranslateService.cs`：Google Gemini v1beta 原生 `generateContent` 端點獨立實作。
-- `cloudbuild.yaml` & `.gcloudignore`：配置 GCP Cloud Build 自動化編譯流水線。
-- `download_build.py`：將 GCP Cloud Storage 編譯成品下載並解壓至 [`output_build/`](file:///c:/Users/alber/Desktop/antigravity/LLPlayer-main/output_build/)。
 
 ---
 
 ## 🛠️ 開發與編譯需求
 
-- **Google Cloud 編譯流水線 (GCP Cloud Build)**:
-  - 執行 `gcloud builds submit --config=cloudbuild.yaml` 即可透過 GCP 雲端進行自動化編譯與打包。
-  - 編譯成品將發佈至 `gs://audiobook-project-b5c7713d-0d34-467f-a53/llplayer-builds/`。
-- **本地執行環境**:
-  - Windows 10 / 11 x64
+- **作業系統**: Windows 10 x64 / Windows 11 x64
+- **執行環境**:
   - [.NET Desktop Runtime 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
   - [Microsoft Visual C++ Redistributable 2022](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)

@@ -1,0 +1,15 @@
+steps:
+  - name: 'mcr.microsoft.com/dotnet/sdk:10.0-preview'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Building LLPlayer with .NET 10 SDK on GCP Cloud Build..."
+        dotnet publish LLPlayer/LLPlayer.csproj -c Release -r win-x64 --self-contained -o ./output
+        cd ./output
+        tar -czvf /workspace/LLPlayer-win-x64.tar.gz *
+
+artifacts:
+  objects:
+    location: 'gs://audiobook-project-b5c7713d-0d34-467f-a53/llplayer-builds/'
+    paths: ['/workspace/LLPlayer-win-x64.tar.gz']

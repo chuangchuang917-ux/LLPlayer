@@ -1,0 +1,65 @@
+<UserControl x:Class="LLPlayer.Views.VocabularyDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:Foreground="White"
+             d:Background="#1E1E1E"
+             d:DesignHeight="550" d:DesignWidth="850"
+             Width="850" Height="550">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <DockPanel Grid.Row="0" Margin="0 0 0 15">
+            <TextBlock Text="📚 生字簿與 Anki 管理 (Vocabulary &amp; Anki)"
+                       FontSize="20" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" />
+            <Button HorizontalAlignment="Right" Content="✕" Click="CloseButton_Click"
+                    Style="{StaticResource MaterialDesignFlatButton}" Foreground="White" FontSize="16"/>
+        </DockPanel>
+
+        <!-- Search & Action Toolbar -->
+        <DockPanel Grid.Row="1" Margin="0 0 0 15">
+            <TextBox x:Name="SearchBox" Width="300" HorizontalAlignment="Left"
+                     materialDesign:HintAssist.Hint="搜尋單字或例句..." TextChanged="SearchBox_TextChanged"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0 0 15 0"/>
+            <Button Content="📥 匯出 CSV 檔案" Click="ExportCsv_Click"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0 0 10 0" />
+            <Button Content="🎴 全部同步至 Anki" Click="SyncAllAnki_Click"
+                    Style="{StaticResource MaterialDesignPaperSecondaryButton}" />
+        </DockPanel>
+
+        <!-- Vocabulary DataGrid -->
+        <DataGrid Grid.Row="2" x:Name="VocabDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserAddRows="False" GridLinesVisibility="Horizontal" Background="#252526" Foreground="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="單字 (Word)" Binding="{Binding Word}" Width="140" FontWeight="Bold" />
+                <DataGridTextColumn Header="翻譯/解釋 (Definition)" Binding="{Binding Definition}" Width="220" />
+                <DataGridTextColumn Header="原句 (Context Sentence)" Binding="{Binding ContextSentence}" Width="*" />
+                <DataGridTextColumn Header="時間 (Time)" Binding="{Binding CreatedAt, StringFormat=\{0:yyyy-MM-dd HH:mm\}}" Width="130" />
+                <DataGridTemplateColumn Header="操作" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="刪除" Click="DeleteRow_Click" Tag="{Binding}"
+                                    Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="#FF6B6B" Padding="5 2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Footer / Status -->
+        <DockPanel Grid.Row="3" Margin="0 15 0 0">
+            <TextBlock x:Name="StatusText" Text="總計 0 個生字" Foreground="#AAA" VerticalAlignment="Center"/>
+            <Button HorizontalAlignment="Right" Content="關閉" Click="CloseButton_Click"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,9 @@
+.git
+.scratch
+bin/
+obj/
+*.user
+*.suo
+FFmpeg/
+downloaded_audiobooks/
+node_modules/
